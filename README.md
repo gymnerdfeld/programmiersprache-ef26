@@ -15,7 +15,7 @@ In diesem Tutorial entwickeln wir Schritt für Schritt unsere eigene Programmier
     - [1.3.1 Tokenize-Phase](1-basics.md#131-tokenize-phase)
     - [1.3.2 Parse-Phase](1-basics.md#132-parse-phase)
     - [1.3.3 Evaluate-Phase](1-basics.md#133-evaluate-phase)
-    * [1.3.4 Weitere Phasen](1-basics.md#134-erweiterte-phasen)
+    - [1.3.4 Weitere Phasen](1-basics.md#134-erweiterte-phasen)
 <!-- - [2 Taschenrechner](2-calculator.md)
   - [2.1 Einfache Rechnungen auswerten](2-calculator.md#21-einfache-rechnungen-auswerten)
   - [2.2 Konstanten](2-calculator.md#22-konstanten)
