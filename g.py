@@ -39,7 +39,12 @@ def parse(tokens):
 # Phase 3: Evaluate #
 #####################
 def evaluate(expr):
-    ...
+    if type(expr) == int:
+        return expr
+    elif type(expr) == list:
+        operator, val1, val2 = expr
+        if operator == "+":
+            return val1 + val2
 
 
 ###########
@@ -47,11 +52,11 @@ def evaluate(expr):
 ###########
 def run(source_code):
     tokens = tokenize(source_code)
-    # print(f"Tokens: {tokens}")
+    print(f"Tokens: {tokens}")
     syntax_tree = parse(tokens)
-    # print(f"Syntax Tree: {syntax_tree}")
+    print(f"Syntax Tree: {syntax_tree}")
     result = evaluate(syntax_tree)
-    # print(f"Result: {result}")
+    print(f"Result: {result}")
     return result
 
 def tests():
