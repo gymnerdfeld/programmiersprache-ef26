@@ -53,7 +53,20 @@ def run(source_code):
     return result
 
 def tests():
-    ...
+    # 1
+    assert run("1") == 1
+    # 4.2
+    assert run("4.2") == 4.2
+    # 1 + 1
+    assert run("(+ 1 1)") == 2
+    # 3 - 1
+    assert run("(- 3 1)") == 2
+    # 2 * 3
+    assert run("(* 2 3)") == 6
+    # 3 / 2
+    assert run("(/ 3 2)") == 1.5
+    # 4 - 2*7
+    assert run("(- 4 (* 2 7))") == -10
 
 def repl():
     print("Welcome to the g programming language. Enter 'q' to exit.")
