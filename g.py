@@ -1,11 +1,13 @@
-#   __ _      //            The g programming language.
-#  / _` |    (oo)           Inspired by lispy
-# | (_| |     \/------\     (https://www.norvig.com/lispy.html)
-#  \__, |      ||     ||
-#  |___/       ||     ||    For an interactive interpreter run:
-#              ||     ||    $ python g.py
-#
-# For details see https://github.com/gymnerdfeld/programmiersprache-ef26
+#   .--./)     //            The g programming language.
+#  /.''\\     (oo)
+# | |  | |     \/            Inspired by lispy
+#  \`-' /      ||            (https://www.norvig.com/lispy.html)
+#  /("'`       ||
+#  \ '---.     ||            For details see
+#   /'""'.\     \------\     https://github.com/gymnerdfeld/programmiersprache-ef26
+#  ||     ||    ||     ||
+#  \'. __//     ||     ||    For an interactive interpreter run:
+#   `'---'      ||     ||    $ python g.py
 
 #####################
 # Phase 1: Tokenize #
