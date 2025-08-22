@@ -174,7 +174,7 @@ Jetzt können wir schrittweise den Code ausführen. Zur besseren Übersicht verw
 
 ### 1.3.4 Weitere Phasen
 
-Unsere Programmiersprache ist vereinfacht, und die interne Darstellung wird direkt evaluiert. In der allerersten Versionen von LISP wurde dies auch genau so gemacht. Relativ schnell hat man einen zusätzlichen Zwischenschritt eingeführt, welcher auch heute bei allen modernen Programmiersprachen gemacht wird. Der Code wird dabei in eine Serie von einfachen Befehlen umgewandelt, den sogenannten Bytecode. Diese Befehle erinnern an die Befehle, welche ein Prozessor direkt ausführen kann. Im gegensatz zu den Befehlen des Prozessors, auch Maschinenbefehle genannt, ist der Bytecode vereinfacht, und kommt ohne die ganzen technischen Details der historisch gewachsenen Maschinenbefehle aus.
+Unsere Programmiersprache ist vereinfacht, und die interne Darstellung wird direkt evaluiert. In der allerersten Versionen von LISP wurde dies auch genau so gemacht. Relativ schnell hat man einen zusätzlichen Zwischenschritt eingeführt, welcher auch heute bei allen modernen Programmiersprachen gemacht wird. Der Code wird dabei in eine Serie von einfachen Befehlen umgewandelt, den sogenannten Bytecode. Diese Befehle erinnern an die Befehle, welche ein Prozessor direkt ausführen kann. Im Gegensatz zu den Befehlen des Prozessors, auch Maschinenbefehle genannt, ist der Bytecode vereinfacht, und kommt ohne die ganzen technischen Details der historisch gewachsenen Maschinenbefehle aus.
 
 Diese vereinfachten Befehle, also der Byte-Code, wird dann von einem Programm ausgeführt. Dieses Programm simuliert dann quasi einen vereinfachten Prozessor für die vereinfachten Befehle, und wird darum Virtuelle Maschine (kurz VM) genannt.
 
