@@ -16,11 +16,11 @@ In diesem Tutorial entwickeln wir Schritt für Schritt unsere eigene Programmier
     - [1.3.2 Parse-Phase](1-basics.md#132-parse-phase)
     - [1.3.3 Evaluate-Phase](1-basics.md#133-evaluate-phase)
     - [1.3.4 Weitere Phasen](1-basics.md#134-erweiterte-phasen)
-<!-- - [2 Taschenrechner](2-calculator.md)
+- [2 Taschenrechner](2-calculator.md)
   - [2.1 Einfache Rechnungen auswerten](2-calculator.md#21-einfache-rechnungen-auswerten)
   - [2.2 Konstanten](2-calculator.md#22-konstanten)
   - [2.3 Variablen](2-calculator.md#23-variablen)
-- [3 Programmiersprache](3-programming_language.md)
+<!-- - [3 Programmiersprache](3-programming_language.md)
   - [3.1 Funktionen, erste Version](3-programming_language.md#31-funktionen-erste-version)
   - [3.2 Funktionen mit lokalen Variablen](3-programming_language.md#32-funktionen-mit-lokalen-variablen) -->
   <!-- * [3.3 Funktionen nutzen (Blöcke und Library)](3-programming_language.md#33-funktionen-nutzen-blöcke-und-library)
