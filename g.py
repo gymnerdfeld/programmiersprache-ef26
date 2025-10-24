@@ -137,6 +137,10 @@ def tests():
     assert run("(/ 3 2)") == 1.5
     # 4 - 2*7
     assert run("(- 4 (* 2 7))") == -10
+    # cos(pi)
+    assert run("(cos pi)") == -1.0
+    # vararg plus
+    assert run("(+ 1 2 3 4 5)") == 15
 
 def repl():
     print("Welcome to the g programming language. Enter 'q' to exit.")
