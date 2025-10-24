@@ -115,11 +115,11 @@ def evaluate(expr):
 ###########
 def run(source_code):
     tokens = tokenize(source_code)
-    print(f"Tokens: {tokens}")
+    #print(f"Tokens: {tokens}")
     syntax_tree = parse(tokens)
-    print(f"Syntax Tree: {syntax_tree}")
+    #print(f"Syntax Tree: {syntax_tree}")
     result = evaluate(syntax_tree)
-    print(f"Result: {result}")
+    #print(f"Result: {result}")
     return result
 
 def tests():
