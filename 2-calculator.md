@@ -52,7 +52,7 @@ def evaluate(expr):
 
 ## 2.2 Konstanten
 
-Ein Taschenrechner hat oft auch Tasten für viel verwendete Konstanten wie $\pi$.  Die Tasten für Konstanten und Operationen unterscheiden sich dabei nicht.  Auch in Python werden Funktionen und Werte am selben Ort abgespeichert.
+Ein Taschenrechner hat oft auch Tasten für viel verwendete Konstanten wie $\tau$.  Die Tasten für Konstanten und Operationen unterscheiden sich dabei nicht.  Auch in Python werden Funktionen und Werte am selben Ort abgespeichert.
 
 ```python
 import math
@@ -67,6 +67,7 @@ builtins = {
     "sin": math.sin,
     "cos": math.cos,
     "pi": math.pi,
+    "tau": math.tau,
     "e": math.e,
     "random": random.random,
 }
@@ -74,13 +75,16 @@ builtins = {
 
 Den `evaluate`-Code passen wir nun so an, dass als Strings angegebene Konstanten wie `pi` nachgeschlagen werden können:
 
-```python
+```python{class=line-numbers}
 def evaluate(expr):
     match expr:
+        # Einfache Werte
         case int(number) | float(number):
             return number
+        # Benannte Dinge nachschlagen
         case str(name):
             return builtins[name]
+        # Einfache Werte
         case [operator, *args]:
             func = builtins[operator]
 
@@ -90,6 +94,7 @@ def evaluate(expr):
                 evaluated_args.append(evaluated_arg)
 
             return function(*evaluated_args)
+        # Unbekannter Ausdruck
         case _:
             raise ValueError("Unbekannter Ausdruck")
 ```
@@ -99,10 +104,13 @@ Der Code zum Nachschlagen des Operators ist jetzt identisch mit dem eben erst er
 ```python
 def evaluate(expr):
     match expr:
+        # Einfache Werte
         case int(number) | float(number):
             return number
+        # Benannte Dinge nachschlagen
         case str(name):
             return builtins[name]
+        # Operationen ausführen
         case [operator, *args]:
             func = evaluate(operator)
 
@@ -112,6 +120,7 @@ def evaluate(expr):
                 evaluated_args.append(evaluated_arg)
 
             return function(*evaluated_args)
+        # Unbekannter Ausdruck
         case _:
             raise ValueError("Unbekannter Ausdruck")
 ```
@@ -150,8 +159,9 @@ def evaluate(expr):
     match expr:
         # Einfache Werte
         ...
+        # Benannte Dinge nachschlagen
         case str(name):
-            return builtins [name]
+            return builtins[name]
 
         # Spezialkonstrukte
         case ["sto", name, value]:
