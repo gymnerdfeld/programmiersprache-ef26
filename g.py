@@ -35,10 +35,73 @@ def parse(tokens):
         else:
             return token
 
+import math
+
+
+def add(*args):
+    result = 0
+    for arg in args:
+        result = result + arg
+    return result
+
+def sub(a, b):
+    return a - b
+
+def mul(*args):
+    result = 1
+    for arg in args:
+        result = result * arg
+    return result
+    #return math.prod(args)
+
+def div(a, b):
+    return a / b
+
+
+builtins = {
+    "+": add,
+    "-": sub,
+    "*": mul,
+    "/": div,
+    "sin": math.sin,
+    "cos": math.cos,
+    "pi": 3.1415926535897932384626433832795,
+    "e": math.e,
+    "tau": math.tau,
+}
+
 #####################
 # Phase 3: Evaluate #
 #####################
 def evaluate(expr):
+    match expr:
+        # Simple values
+        case int(number) | float(number):
+            return number
+        case str(name):
+            return builtins[name]
+        
+        # Special cases
+        case ["function", ]:    # Fuktionsdefinition
+            ...
+
+        case ["sto", name, value]:     # Variable abspeichern
+            value = evaluate(value)
+            builtins[name] = value
+            return value
+        
+        # Function call
+        case [operator, *args]:        # Funktionsaufruf
+            func = evaluate(operator)
+            evaluated_args = [evaluate(arg) for arg in args]  # List comprehension
+            # Unterscheidung eingebaute vs. Funktion in g
+            match func:
+                case []:  # Funktion in g
+                    ...
+                case callable(func):  # Eingebaute Funktion in Python
+                    return func(*evaluated_args)
+        case _:
+            raise ValueError("Unknown expression:", expr)
     if type(expr) == int:
         return expr
     elif type(expr) == list:
