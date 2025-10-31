@@ -20,9 +20,9 @@ In diesem Tutorial entwickeln wir Schritt für Schritt unsere eigene Programmier
   - [2.1 Einfache Rechnungen auswerten](2-calculator.md#21-einfache-rechnungen-auswerten)
   - [2.2 Konstanten](2-calculator.md#22-konstanten)
   - [2.3 Variablen](2-calculator.md#23-variablen)
-<!-- - [3 Programmiersprache](3-programming_language.md)
+- [3 Programmiersprache](3-programming_language.md)
   - [3.1 Funktionen, erste Version](3-programming_language.md#31-funktionen-erste-version)
-  - [3.2 Funktionen mit lokalen Variablen](3-programming_language.md#32-funktionen-mit-lokalen-variablen) -->
+ - [3.2 Funktionen mit lokalen Variablen](3-programming_language.md#32-funktionen-mit-lokalen-variablen)
   <!-- * [3.3 Funktionen nutzen (Blöcke und Library)](3-programming_language.md#33-funktionen-nutzen-blöcke-und-library)
   - [3.4 Rekursion und `if`](3-programming_language.md#34-rekursion-und-if)
   - [3.5 Closures](3-programming_language.md#35-closures)
