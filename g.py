@@ -57,6 +57,8 @@ def mul(*args):
 def div(a, b):
     return a / b
 
+def block(*values):
+    return values[-1]
 
 builtins = {
     "+": add,
@@ -68,6 +70,7 @@ builtins = {
     "pi": 3.1415926535897932384626433832795,
     "e": math.e,
     "tau": math.tau,
+    "block": block,
 }
 
 #####################
