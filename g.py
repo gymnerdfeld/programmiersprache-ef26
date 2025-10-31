@@ -66,12 +66,15 @@ builtins = {
     "*": mul,
     "/": div,
     "sin": math.sin,
-    "cos": math.cos,
-    "pi": 3.1415926535897932384626433832795,
-    "e": math.e,
-    "tau": math.tau,
     "block": block,
 }
+
+from pathlib import Path
+library_file = Path(__file__).parent / "library.scm"
+library = library_file.read_text()
+
+# The function call stack
+stack = [builtins]
 
 #####################
 # Phase 3: Evaluate #
@@ -144,13 +147,13 @@ def tests():
     assert run("(/ 3 2)") == 1.5
     # 4 - 2*7
     assert run("(- 4 (* 2 7))") == -10
-    # cos(pi)
-    assert run("(cos pi)") == -1.0
     # vararg plus
     assert run("(+ 1 2 3 4 5)") == 15
 
 def repl():
     print("Welcome to the g programming language. Enter 'q' to exit.")
+
+    run(library)
 
     done = False
     while not done:
