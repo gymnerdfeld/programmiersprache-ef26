@@ -57,6 +57,9 @@ def mul(*args):
 def div(a, b):
     return a / b
 
+def power(a, b):
+    return a ** b
+
 def block(*values):
     return values[-1]
 
@@ -65,6 +68,7 @@ builtins = {
     "-": sub,
     "*": mul,
     "/": div,
+    "**": power,
     "sin": math.sin,
     "block": block,
 }
