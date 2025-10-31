@@ -5,7 +5,7 @@ In der aktuelle Version unserer Programmiersprache können Funktionen programmie
 Zum Beispiel kann man nun die Wurzelfunktion `sqrt` direkt in unserer Sprache umsetzen:
 
 ```scm
-(sto sqrt (function (x) (expt x 0.5)))
+(sto sqrt (function (x) (** x 0.5)))
 
 (sqrt 4)  ;; -> 2.0
 ```
