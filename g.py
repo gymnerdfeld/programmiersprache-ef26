@@ -100,7 +100,8 @@ def evaluate(expr):
 
         case ["sto", name, value]:     # Variable abspeichern
             value = evaluate(value)
-            builtins[name] = value
+            local_variables = stack[-1]  # Top of the stack
+            local_variables[name] = value
             return value
         
         # Function call
