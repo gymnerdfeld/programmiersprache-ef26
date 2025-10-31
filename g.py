@@ -111,9 +111,13 @@ def evaluate(expr):
             # Unterscheidung eingebaute vs. Funktion in g
             match func:
                 case ["function", params, body]:  # Funktion in g
+                    local_variables = {}
+                    stack.append(local_variables)
                     for name, value in zip(params, evaluated_args):
-                        builtins[name] = value
-                    return evaluate(body)
+                        local_variables[name] = value
+                    result = evaluate(body)
+                    stack.pop()
+                    return result
                 case _ if callable(func):  # Eingebaute Funktion in Python
                     return func(*evaluated_args)
                 case _:
