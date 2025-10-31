@@ -84,8 +84,15 @@ def evaluate(expr):
         # Simple values
         case int(number) | float(number):
             return number
-        case str(name):
-            return builtins[name]
+        case str(name):    # Lookup names
+            # Local variables
+            local_variables = stack[-1]
+            if name in local_variables:
+                return local_variables[name]
+            elif name in builtins:
+                return builtins[name]
+            else:
+                raise NameError(f"Variable '{name}' does not exist")
         
         # Special cases
         case ["function", params, body]:    # Fuktionsdefinition
