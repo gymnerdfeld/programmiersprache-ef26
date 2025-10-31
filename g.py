@@ -82,8 +82,8 @@ def evaluate(expr):
             return builtins[name]
         
         # Special cases
-        case ["function", ]:    # Fuktionsdefinition
-            ...
+        case ["function", params, body]:    # Fuktionsdefinition
+            return ["function", params, body]
 
         case ["sto", name, value]:     # Variable abspeichern
             value = evaluate(value)
@@ -96,10 +96,14 @@ def evaluate(expr):
             evaluated_args = [evaluate(arg) for arg in args]  # List comprehension
             # Unterscheidung eingebaute vs. Funktion in g
             match func:
-                case []:  # Funktion in g
-                    ...
-                case callable(func):  # Eingebaute Funktion in Python
+                case ["function", params, body]:  # Funktion in g
+                    for name, value in zip(params, evaluated_args):
+                        builtins[name] = value
+                    return evaluate(body)
+                case _ if callable(func):  # Eingebaute Funktion in Python
                     return func(*evaluated_args)
+                case _:
+                    raise ValueError(f"Not a function: {func}")
         case _:
             raise ValueError("Unknown expression:", expr)
     if type(expr) == int:
