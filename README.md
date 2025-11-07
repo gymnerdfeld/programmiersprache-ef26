@@ -22,13 +22,12 @@ In diesem Tutorial entwickeln wir Schritt für Schritt unsere eigene Programmier
   - [2.3 Variablen](2-calculator.md#23-variablen)
 - [3 Programmiersprache](3-programming_language.md)
   - [3.1 Funktionen, erste Version](3-programming_language.md#31-funktionen-erste-version)
- - [3.2 Funktionen mit lokalen Variablen](3-programming_language.md#32-funktionen-mit-lokalen-variablen)
-  <!-- * [3.3 Funktionen nutzen (Blöcke und Library)](3-programming_language.md#33-funktionen-nutzen-blöcke-und-library)
+  - [3.2 Funktionen mit lokalen Variablen](3-programming_language.md#32-funktionen-mit-lokalen-variablen)
+  - [3.3 Funktionen nutzen (Blöcke und Library)](3-programming_language.md#33-funktionen-nutzen-blöcke-und-library)
+  <!--
   - [3.4 Rekursion und `if`](3-programming_language.md#34-rekursion-und-if)
   - [3.5 Closures](3-programming_language.md#35-closures)
   - [4 Projekte](4-projects.md) -->
-
-<!-- ## Übersicht -->
 
 ## Begriffe
 
@@ -39,7 +38,7 @@ In diesem Tutorial entwickeln wir Schritt für Schritt unsere eigene Programmier
 - **Interne Darstellung**: Interne Darstellung eines Programms, oft in einer Baum-ähnlichen Struktur. Bei uns wird ein Programm mit verschachtelten Listen, Strings und Zahlen dargestellt.
 - **Evaluate**: Dritte Phase bei der Ausführung eines Programms. Die interne Darstellung Schritt für Schritt ausführen, um am Schluss zu einem Resultat zu gelangen.
 - **Schlüsselwort**: Wort, welches in einer Programmiersprache eine spezielle Bedeutung hat, und darum zum Beispiel nicht als Variablen- oder Funktionsnamen verwendet werden darf. In unserer Sprache beispielsweise `sto`, oder `def` in Python.
-- **Eingebaute Funktion**: Eine Funktion, welche in unserer Programmiersprache benutzt werden kann, aber in der Host-Programmiersprache programmiert wurde. Zum Beispiel `add` für die Addition zweier Zahlen.
+- **Eingebaute Funktion**: Eine Funktion, welche in unserer Programmiersprache benutzt werden kann, aber in der Host-Programmiersprache programmiert wurde. Zum Beispiel `add` für die Addition zweier Zahlen mit dem `+`-Operator.
 - **Library-Funktion**: Eine Funktion, welche in unserer Programmiersprache benutzt werden kann, und auch in unserer Programmiersprache programmiert wurde. Die Library-Funktionen werden vor der Ausführung eines Programms geladen.
 - **Lokale Variablen**: Variablen, welche nur innerhalb einer Funktion existieren. Also alle Argumente der Funktion und auch alle Variablen, welche innerhalb der Funktion definiert wurden. Sie werden im lokalen Scope abgespeichert.
 - **Scope**: Ort um Werte wie Variablen und Funktionen abzuspeichern. Mit jedem Funktionsaufruf wird ein neuer Scope erstellt. Der Scope ist darum innerhalb und ausserhalb einer Funktion verschieden.
@@ -48,9 +47,9 @@ In diesem Tutorial entwickeln wir Schritt für Schritt unsere eigene Programmier
 
 ## Referenzen
 
-`lis.py` und `lispy.py` von Peter Norvig.
+[`lis.py`](https://norvig.com/lispy.html) und [`lispy.py`](https://norvig.com/lispy2.html) von Peter Norvig.
 
-Luciano Ramalho
+Luciano Ramalho's [Version von Lispy](https://github.com/fluentpython/lispy).
 
 ## Lizenz
 
