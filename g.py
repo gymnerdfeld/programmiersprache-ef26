@@ -64,6 +64,12 @@ def power(a, b):
 def block(*values):
     return values[-1]
 
+def eq(a, b):
+    return a == b
+
+def lt(a, b):
+    return a < b
+
 builtins = {
     "+": add,
     "-": sub,
@@ -72,6 +78,8 @@ builtins = {
     "**": power,
     "sin": math.sin,
     "block": block,
+    "==": eq,
+    "<": lt,
 }
 
 from pathlib import Path
@@ -109,6 +117,14 @@ def evaluate(expr):
             local_variables[name] = value
             return value
         
+        case ["if", condition, body_true, body_false]:
+            if evaluate(condition):
+                # body_false nicht evaluieren!
+                return evaluate(body_true)
+            else:
+                # body_true nicht evaluieren!
+                return evaluate(body_false)
+
         # Function call
         case [operator, *args]:        # Funktionsaufruf
             func = evaluate(operator)

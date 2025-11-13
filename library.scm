@@ -5,4 +5,17 @@
     (sto cos (function (x) 
         (sin (+ x (/ pi 2)))
     ))
+
+    ; Betrag
+    (sto abs (function (x)
+        (if (< x 0) (- 0 x) x)
+    ))
+
+    ; Factorial (Fakultät): rekursiv definiert
+    (sto fact (function (n)
+        (if (== n 0)
+            1
+            (* n (fact (- n 1)))
+        )
+    ))
 )
