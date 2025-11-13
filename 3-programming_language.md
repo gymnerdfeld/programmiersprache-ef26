@@ -52,26 +52,22 @@ Unsere eigenen Funktionen sind Listen aus dem Schlüsselwort `function`, den Nam
 def evaluate(expr):
     match expr:
         ...
-        # Funktionen
+        # Function call
         case [operator, *args]:
             func = evaluate(operator)
 
-            for arg in args:
-                evaluated_arg = evaluate(arg)
-                evaluated_args.append(evaluated_arg)
+            evaluated_args = [evaluate(arg) for arg in args]
 
             match func:
                 # "Eigene" Funktion
                 case ["function", params, body]:
-                    for i in range(len(params)):
-                        value = args[i]
-                        name = params[i]
-                        everything[name] = value
+                    for name, value in zip(params, evaluated_args):
+                        builtins[name] = value
                     return evaluate(body)
 
                 # Python Funktion
-                case _:
-                    return func(*args)
+                case _ if callable(func):
+                    return func(*evaluated_args)
 ```
 
 Bei den eingebauten Python-Funktionen ganz unten ist alles wie bisher: Direkt aufrufen.
@@ -132,27 +128,31 @@ Wir müssen unseren Code dazu an einigen Stellen umbauen.
 Zuerst kreieren wir den Stack, in welchem wir die lokalen Variablen der Funktionsaufrufe abspeichern. Ganz am Anfang des Stacks befinden sich die eingebauten Funktionen von `builtins`, als zweites der Dict mit den globalen Variablen, welcher initial leer ist:
 
 ```py
-stack = [builtins, {}]
+stack = [builtins]
 ```
 
-Beim Nachschlagen einer Variable gehen wir jetzt von hinten nach vorne durch den Stack. Wenn sich die Variable nirgends wo finden lässt, geben wir eine entsprechende Fehlermeldung aus:
+Beim Nachschlagen einer Variable schauen wir zuerst im Scope zuoberst auf dem Stack, also bei den lokalen Variablen. Als zweites suchen wir die Variable in den `builtins`, also den globalen Variablen. Wenn sich die Variable nirgends wo finden lässt, geben wir eine entsprechende Fehlermeldung aus:
 
 ```py
 def evaluate(expr):
     match expr:
         ...
         case str(name):
-            for scope in reversed(stack):
-                if name in scope:
-                    return scope[name]
-            raise NameError(f"name '{name}' is not defined")
-        case ["sto", name, value]:
-            case ["sto", name, value]:  # Einen Wert unter einem Namen abspeichern
+            local_variables = stack[-1]    # Top of the stack
+            if name in local_variables:
+                return local_variables[name]
+            elif name in builtins:
+                return builtins[name]
+            else:
+                raise NameError(f"Variable '{name}' does not exist")
+        case ["sto", name, value]:         # Einen Wert unter einem Namen abspeichern
+            value = evaluate(value)
             scope = stack[-1]
-            scope[name] = evaluate(value)
+            scope[name] = value
+            return value
 ```
 
-Auch das Abspeichern mit `sto` ändert sich leicht. Wir speichern eine Variable immer im lokalen also letzten Scope ab.
+Auch das Abspeichern mit `sto` ändert sich leicht. Wir speichern eine Variable immer im lokalen Scope, also im Scope zuoberst auf dem Stack ab.
 
 Jetzt kommen wir zum wichtigsten Teil unserer Änderungen, dem Aufruf von Funktionen. Und zwar folgendermassen:
 
@@ -165,20 +165,18 @@ def evaluate(expr):
             evaluated_args = []
             func = evaluate(operator)
 
-            for arg in args:
-                evaluated_arg = evaluate(arg)
-                evaluated_args.append(evaluated_arg)
+            evaluated_args = [evaluate(arg) for arg in args]
 
             # Unterscheide Funktion in Python oder Schemepy
             match func:
                 case ["function", params, body]:  # Schemepy Funktion
-                    # 1. Neuer Scope erstellen
-                    local_scope = {}
-                    stack.append(local_scope)
+                    # 1. Neuer Scope für lokale Variablen erstellen
+                    local_variables = {}
+                    stack.append(local_variables)
 
                     # 2. Parameter abspeichern (in neuem Scope)
                     for name, value in zip(params, evaluated_args):
-                        local_scope[name] = value
+                        local_variables[name] = value
 
                     # 3. Funktion ausführen
                     result = evaluate(body)
@@ -188,13 +186,13 @@ def evaluate(expr):
 
                     # 5. Resultat zurück geben
                     return result
-                case _:  # In Python geschriebene Funktion
+                case _ if callable(func):  # In Python geschriebene Funktion
                     return func(*evaluated_args)
 ```
 
 Treffen wir nun auf eine Funktion, welche in unserer eigenen Programmiersprache geschrieben wurde, erstellen wir ein neues `dict` für die lokalen Variablen, und speichern dort die Werte (Argumente) unter den Korrekten Namen (Parameternamen) ab.
 
-Mit dem neuen `dict` namens `local_scope` als letzter Eintrag auf dem Stack führen wir jetzt den Body der Funktion aus. Danach müssen wir wieder aufräumen und das Resultat zurück geben.
+Mit dem neuen `dict` namens `local_variables` als letzter Eintrag auf dem Stack führen wir jetzt den Body der Funktion aus. Danach müssen wir wieder aufräumen und das Resultat zurück geben.
 
 <!-- ## 3.3 Funktionen nutzen (Blöcke und Library)
 
