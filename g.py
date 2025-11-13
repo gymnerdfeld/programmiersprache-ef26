@@ -13,6 +13,7 @@
 # Phase 1: Tokenize #
 #####################
 def tokenize(source_code):
+    source_code = "\n".join(line.split(";")[0] for line in source_code.split("\n"))
     return source_code.replace("(", " ( ").replace(")", " ) ").split()
 
 ##################
