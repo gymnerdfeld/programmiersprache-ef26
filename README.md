@@ -42,6 +42,7 @@ In diesem Tutorial entwickeln wir Schritt für Schritt unsere eigene Programmier
 - **Library-Funktion**: Eine Funktion, welche in unserer Programmiersprache benutzt werden kann, und auch in unserer Programmiersprache programmiert wurde. Die Library-Funktionen werden vor der Ausführung eines Programms geladen.
 - **Lokale Variablen**: Variablen, welche nur innerhalb einer Funktion existieren. Also alle Argumente der Funktion und auch alle Variablen, welche innerhalb der Funktion definiert wurden. Sie werden im lokalen Scope abgespeichert.
 - **Scope**: Ort um Werte wie Variablen und Funktionen abzuspeichern. Mit jedem Funktionsaufruf wird ein neuer Scope erstellt. Der Scope ist darum innerhalb und ausserhalb einer Funktion verschieden.
+- **Spezialkonstrukt**: Ein Ausdruck, welcher nicht wie eine normale Funktion ausgewertet wird. Zum Beispiel `if` in Python, oder `sto` in unserer Sprache.
 - **Stack**: Ein Stapel (mit einer Liste programmiert), in welchem die Scopes der Funktionsaufrufe abgespeichert werden. Der aktuelle Scope landet immer zuoberst auf dem Stapel (am Schluss der Liste). Der Stack ermöglicht verschachtelte Funktionsaufrufe, also Funktionen, welche andere Funktionen aufrufen.
 - **Rekursion**: Eine Art des Programmierens, bei der Funktionen sich selber aufrufen. Zum Beispiel eine Funktion welche die Fakultät einer Zahl berechnet.
 
