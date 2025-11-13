@@ -229,7 +229,7 @@ def repl():
         expr = input("> ")
         if expr.strip().lower() == "q":
             done = True
-        else:
+        elif expr.strip():
             try:
                 result = run(expr)
                 print(result)
