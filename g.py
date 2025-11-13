@@ -13,7 +13,9 @@
 # Phase 1: Tokenize #
 #####################
 def tokenize(source_code):
+    # Remove comments
     source_code = "\n".join(line.split(";")[0] for line in source_code.split("\n"))
+    # Split code into tokens
     return source_code.replace("(", " ( ").replace(")", " ) ").split()
 
 ##################
@@ -28,17 +30,20 @@ def parse(tokens):
         tokens.pop(0)
         return lst
     else:
+        # Parse numbers
         if token[0] in "0123456789-" and token != "-":
-            if "." in token:
+            if "." in token:    # Decimal
                 return float(token)
-            else:
+            else:               # Integer
                 return int(token)
         else:
             return token
 
-import math
 
 
+######################
+# Built-in functions #
+######################
 def add(*args):
     result = 0
     for arg in args:
@@ -53,7 +58,6 @@ def mul(*args):
     for arg in args:
         result = result * arg
     return result
-    #return math.prod(args)
 
 def div(a, b):
     return a / b
@@ -61,32 +65,44 @@ def div(a, b):
 def power(a, b):
     return a ** b
 
-def block(*values):
-    return values[-1]
-
 def eq(a, b):
     return a == b
 
 def lt(a, b):
     return a < b
 
+def block(*values):
+    return values[-1]
+
+import math
+
 builtins = {
+    # Math operators
     "+": add,
     "-": sub,
     "*": mul,
     "/": div,
     "**": power,
     "sin": math.sin,
-    "block": block,
+
+    # Comparisons
     "==": eq,
     "<": lt,
+
+    # Block: Execute multiple statements in order and return last value
+    "block": block,
 }
 
+################
+# Load library #
+################
 from pathlib import Path
 library_file = Path(__file__).parent / "library.scm"
 library = library_file.read_text()
 
-# The function call stack
+#######################
+# Function call stack #
+#######################
 stack = [builtins]
 
 #####################
@@ -94,12 +110,12 @@ stack = [builtins]
 #####################
 def evaluate(expr):
     match expr:
-        # Simple values
+        # Simple values (numbers)
         case int(number) | float(number):
             return number
-        case str(name):    # Lookup names
-            # Local variables
-            local_variables = stack[-1]
+        # Names (look up in local or global scope)
+        case str(name):
+            local_variables = stack[-1]    # Top of the stack
             if name in local_variables:
                 return local_variables[name]
             elif name in builtins:
@@ -107,16 +123,22 @@ def evaluate(expr):
             else:
                 raise NameError(f"Variable '{name}' does not exist")
         
-        # Special cases
-        case ["function", params, body]:    # Fuktionsdefinition
+        # ###############
+        # Special cases #
+        # ###############
+
+        # Function definition
+        case ["function", params, body]:
             return ["function", params, body]
 
-        case ["sto", name, value]:     # Variable abspeichern
+        # Store value under a given name
+        case ["sto", name, value]:
             value = evaluate(value)
-            local_variables = stack[-1]  # Top of the stack
+            local_variables = stack[-1]     # Top of the stack
             local_variables[name] = value
             return value
         
+        # if: Conditional execution
         case ["if", condition, body_true, body_false]:
             if evaluate(condition):
                 # body_false nicht evaluieren!
@@ -126,23 +148,37 @@ def evaluate(expr):
                 return evaluate(body_false)
 
         # Function call
-        case [operator, *args]:        # Funktionsaufruf
+        case [operator, *args]:
             func = evaluate(operator)
-            evaluated_args = [evaluate(arg) for arg in args]  # List comprehension
-            # Unterscheidung eingebaute vs. Funktion in g
+            # Evaluate all arguments first
+            evaluated_args = [evaluate(arg) for arg in args]
+
             match func:
-                case ["function", params, body]:  # Funktion in g
+                # Function written in g
+                case ["function", params, body]:
+                    # Create new scope for local variables
                     local_variables = {}
+                    # Push new scope to the top of the stack
                     stack.append(local_variables)
+                    # Store all arguments under correct name in new local scope
                     for name, value in zip(params, evaluated_args):
                         local_variables[name] = value
+                    # Evaluate the function code
                     result = evaluate(body)
+                    # Discard local scope (not needed anymore)
                     stack.pop()
+                    # Return calculated result
                     return result
-                case _ if callable(func):  # Eingebaute Funktion in Python
+
+                # Built-in function (written in Python)
+                case _ if callable(func):
                     return func(*evaluated_args)
+
+                # Not a function
                 case _:
                     raise ValueError(f"Not a function: {func}")
+
+        # Unknown expression: empty expression ()
         case _:
             raise ValueError("Unknown expression:", expr)
     if type(expr) == int:
