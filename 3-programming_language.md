@@ -194,7 +194,7 @@ Treffen wir nun auf eine Funktion, welche in unserer eigenen Programmiersprache 
 
 Mit dem neuen `dict` namens `local_variables` als letzter Eintrag auf dem Stack führen wir jetzt den Body der Funktion aus. Danach müssen wir wieder aufräumen und das Resultat zurück geben.
 
-<!-- ## 3.3 Funktionen nutzen (Blöcke und Library)
+## 3.3 Funktionen nutzen (Blöcke und Library)
 
 In unserer Konsole können wir schrittweise Rechnungen ausführen, dabei Zwischenresultate unter eigenen Namen abspeichern. Innerhalb von Funktionen ist das momentan noch nicht möglich, da der Body einer Funktion nur einen einzige Anweisung sein kann. Anstatt die Definition von Funktionen anzupassen, führen wir eine neue `block`-Anweisung ein, welche wir dann an ganz verschiedenen Orten einsetzen können.
 
@@ -223,29 +223,77 @@ def evaluate(expr, env=global_env):
             return evaluate(last, env)
 ```
 
+Aber da bei uns die Argumente eines Funktionsaufrufs immer der Reihe nach ausgewertet werden, können wir den `block` auch ganz einfach als eingebaute Funktion implementieren:
+
+```py
+def block(*values):
+    return values[-1]
+
+...
+
+builtins = {
+    ...
+
+    # Block: Execute multiple statements in order and return last value
+    "block": block,
+}
+```
+
 Und wir wollen unsere neue `block`-Anweisung anwenden. Unserer Programmiersprache unterstützt nun Funktionen, und so können wir häufig gebrauchte Funktionen auch in unserer eigenen Programmiersprache schreiben, und müssen dabei nur noch in Ausnahmefällen auf Python zurück greifen. Diese Funktionen (und auch Definitionen von Konstanten) sammeln wir dann in der Standardbibliothek (engl. _standard library_ oder kurz _library_):
 ```py
 library = """
 (block
-    (var e 2.718281828459045)
-    (var pi 3.141592653589793)
-    (var sqrt (fn (x) (expt x 0.5)))
-    (var > (fn (a b) (< b a)))
+    (sto e 2.718281828459045)
+    (sto pi 3.141592653589793)
+    (sto sqrt (function (x) (** x 0.5)))
+    (sto > (function (a b) (< b a)))
 )
 """
 ```
 
-
-
 Damit wir diese Funktionen in unseren Programmen auch verwenden können, müssen wir die `library` beim Starten unseres Interpreters laden, also ausführen:
 ```py
 def repl():
-    """Read-Eval-Print-Loop: Unsere Konsole
+    print("Welcome to the g programming language. Enter 'q' to exit.")
 
-    User-Eingabe analysieren und evaluieren.
-    """
     run(library)
 
-    while True:
+    done = False
+    while not done:
         ...
-``` -->
+```
+
+Wenn wir jetzt noch die Library in eine separate Datei auslagern, können wir vom Syntax-Highlighting unseres Editors profitieren.
+```py
+from pathlib import Path
+library_file = Path(__file__).parent / "library.scm"
+library = library_file.read_text()
+```
+
+Die Datei mit dem Library-Code heisst `library.scm`:
+```scheme
+(block
+    ; Constants
+    (sto pi 3.1415926535897932384626433832795)
+    (sto tau (* pi 2))
+    (sto e 2.7182818284590452353602874713527)
+
+    ; Cosine
+    (sto cos (function (x) 
+        (sin (+ x (/ pi 2)))
+    ))
+
+    ; Absolute value (Betrag)
+    (sto abs (function (x)
+        (if (< x 0) (- 0 x) x)
+    ))
+
+    ; Factorial (Fakultät): recursive definition
+    (sto fact (function (n)
+        (if (== n 0)
+            1
+            (* n (fact (- n 1)))
+        )
+    ))
+)
+```
