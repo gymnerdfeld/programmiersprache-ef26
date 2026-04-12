@@ -133,7 +133,10 @@ def evaluate(expr):
 
         # Function definition
         case ["function", params, body]:
-            return ["function", params, body]
+            if len(stack) > 1:
+                return ["function", params, body, stack[-1]]   # Funktion mit den lokale Variablen
+            else:
+                return ["function", params, body, {}]
 
         # Store value under a given name
         case ["sto", name, value]:
@@ -159,9 +162,9 @@ def evaluate(expr):
 
             match func:
                 # Function written in g
-                case ["function", params, body]:
+                case ["function", params, body, closure_variables]:
                     # Create new scope for local variables
-                    local_variables = {}
+                    local_variables = closure_variables.copy()
                     # Push new scope to the top of the stack
                     stack.append(local_variables)
                     # Store all arguments under correct name in new local scope
