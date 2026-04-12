@@ -89,6 +89,10 @@ builtins = {
     "==": eq,
     "<": lt,
 
+    # Boolean values
+    "True": True,
+    "False": False,
+
     # Block: Execute multiple statements in order and return last value
     "block": block,
 }
