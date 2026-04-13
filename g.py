@@ -93,6 +93,9 @@ builtins = {
     "True": True,
     "False": False,
 
+    # Print
+    "print": print,
+
     # Block: Execute multiple statements in order and return last value
     "block": block,
 }
