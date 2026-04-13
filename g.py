@@ -86,7 +86,7 @@ builtins = {
     "sin": math.sin,
 
     # Comparisons
-    "==": eq,
+    # "==": eq, # neu in der Library
     "<": lt,
 
     # Boolean values

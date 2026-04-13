@@ -21,4 +21,34 @@
             (* n (fact (- n 1)))
         )
     ))
+
+    ; Vergleichsoperatoren (alle basierend auf "<"-builtin)
+    (sto > (function (a b)
+        (< b a)
+    ))
+
+    (sto != (function (a b)
+        (if (> a b)
+            True
+            (if (< a b)
+                True
+                False
+            )
+        )
+    ))
+
+    (sto == (function (a b)
+        (if (!= a b)
+            False
+            True
+        )
+    ))
+
+    (sto not (function (a)
+        (if a False True)
+    ))
+
+    (sto <= (function (a b)
+        (not (< b a))
+    ))
 )
